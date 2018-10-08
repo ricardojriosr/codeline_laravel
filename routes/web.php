@@ -11,6 +11,29 @@
 |
 */
 
+Route::auth();
+
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('films.index');
 });
+
+Route::get('films',[
+    'uses'  => 'FilmController@index',
+    'as'    => 'films.index'
+]);
+
+Route::get('/films/s/{slug}', [
+    'uses'  => 'FilmController@showslug',
+    'as'    => 'films.show'
+]);
+
+Route::get('/films/create', [
+    'uses'  => 'FilmController@create',
+    'as'    => 'films.create'
+]);
+
+Route::resource('comments', 'CommentController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
